@@ -15,7 +15,8 @@ import br.com.mouawad.estudos.spring01.repositories.ProdutoRepository;
 @SpringBootApplication
 public class EstudoSpringApplication implements CommandLineRunner{
 
-	@Autowired
+	
+	@Autowired													//
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private ProdutoRepository produtoRepository;

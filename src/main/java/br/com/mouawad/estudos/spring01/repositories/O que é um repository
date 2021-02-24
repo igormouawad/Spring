@@ -1,0 +1,3 @@
+@Repositoryé uma anotação Spring que indica que a classe decorada é um repositório.
+Um repositório é um mecanismo para encapsular o comportamento 
+	de armazenamento, recuperação e pesquisa que emula uma coleção de objetos. 
