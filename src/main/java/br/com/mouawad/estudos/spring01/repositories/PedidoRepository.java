@@ -3,9 +3,9 @@ package br.com.mouawad.estudos.spring01.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.mouawad.estudos.spring01.domain.Cidade;
+import br.com.mouawad.estudos.spring01.domain.Pedido;
 
 @Repository
-public interface CidadeRepository extends JpaRepository<Cidade, Integer> {
+public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
 }

@@ -1,5 +1,6 @@
 package br.com.mouawad.estudos.spring01;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,20 @@ import br.com.mouawad.estudos.spring01.domain.Cidade;
 import br.com.mouawad.estudos.spring01.domain.Cliente;
 import br.com.mouawad.estudos.spring01.domain.Endereco;
 import br.com.mouawad.estudos.spring01.domain.Estado;
+import br.com.mouawad.estudos.spring01.domain.Pagamento;
+import br.com.mouawad.estudos.spring01.domain.PagamentoComBoleto;
+import br.com.mouawad.estudos.spring01.domain.PagamentoComCartao;
+import br.com.mouawad.estudos.spring01.domain.Pedido;
 import br.com.mouawad.estudos.spring01.domain.Produto;
+import br.com.mouawad.estudos.spring01.domain.enums.EstadoPagamento;
 import br.com.mouawad.estudos.spring01.domain.enums.TipoCliente;
 import br.com.mouawad.estudos.spring01.repositories.CategoriaRepository;
 import br.com.mouawad.estudos.spring01.repositories.CidadeRepository;
 import br.com.mouawad.estudos.spring01.repositories.ClienteRepository;
 import br.com.mouawad.estudos.spring01.repositories.EnderecoRepository;
 import br.com.mouawad.estudos.spring01.repositories.EstadoRepository;
+import br.com.mouawad.estudos.spring01.repositories.PagamentoRepository;
+import br.com.mouawad.estudos.spring01.repositories.PedidoRepository;
 import br.com.mouawad.estudos.spring01.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -38,6 +46,10 @@ public class EstudoSpringApplication implements CommandLineRunner{
 	private ClienteRepository clienteRepository ;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(EstudoSpringApplication.class, args);
@@ -88,6 +100,22 @@ public class EstudoSpringApplication implements CommandLineRunner{
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2019 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null,EstadoPagamento.QUITADO,ped1,6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,ped2,sdf.parse("20/10/2017 00:00"),null);
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		
 		
 	}
 
