@@ -26,7 +26,7 @@ import br.com.mouawad.estudos.spring01.repositories.ProdutoRepository;
 public class EstudoSpringApplication implements CommandLineRunner{
 
 	
-	@Autowired													//
+	@Autowired													
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -78,8 +78,11 @@ public class EstudoSpringApplication implements CommandLineRunner{
 		Cliente cli1 = new Cliente(null, "MAria Silva", "maria@gmail.com", "341332", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("2131231","5555555555"));
 		
-		Endereco e1 = new Endereco(null, "Rua flores", "300", "Apto 303", "Jardim", cli1, c1);
-		Endereco e2 = new Endereco(null, "Rua flores", "300", "Apto 303", "Jardim", cli1, c2);
+		
+				
+		Endereco e1 = new Endereco(null, "Voluntário", "940","Rua 1 casa 182","12053-000" ,"Estiva", cli1, c1);
+		
+		Endereco e2 = new Endereco(null,"rua Equador","161", "", "1247-000", "Jd. das Nacoes", cli1,c2);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
 		
