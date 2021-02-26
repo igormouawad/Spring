@@ -1,5 +1,6 @@
 package br.com.mouawad.estudos.spring.resources.excepetion;
 
+
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
@@ -10,7 +11,7 @@ public class StandardError implements Serializable {
 	private String error;
 	private String message;
 	private String path;
-
+	
 	public StandardError(Long timestamp, Integer status, String error, String message, String path) {
 		super();
 		this.timestamp = timestamp;

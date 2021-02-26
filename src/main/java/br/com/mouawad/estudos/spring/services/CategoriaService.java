@@ -8,10 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.stereotype.Service;
 
 import br.com.mouawad.estudos.spring.domain.Categoria;
+import br.com.mouawad.estudos.spring.dto.CategoriaDTO;
 import br.com.mouawad.estudos.spring.repositories.CategoriaRepository;
 import br.com.mouawad.estudos.spring.services.exeptions.DataIntegrityException;
 import br.com.mouawad.estudos.spring.services.exeptions.ObjectNotFoundException;
@@ -35,7 +35,7 @@ public class CategoriaService {
 
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
-		return categoriaRepository.save(obj);
+			return categoriaRepository.save(obj);	
 	}
 
 	public Categoria update(Categoria obj) {
@@ -57,6 +57,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page,Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pagRequest = PageRequest.of(page, linesPerPage,Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pagRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 
 }

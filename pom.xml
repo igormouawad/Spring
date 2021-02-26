@@ -12,7 +12,7 @@
 	<groupId>br.com.mouawad.estudos</groupId>
 	<artifactId>EstudoSpring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>EstudoSpring</name>
+	<name>Spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -45,6 +45,17 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
