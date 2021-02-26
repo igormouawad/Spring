@@ -13,18 +13,18 @@ import br.com.mouawad.estudos.spring.services.PedidoService;
 @RestController
 @RequestMapping(value = "/pedidos")
 public class PedidoResource {
-	
-	//Inject
+
+	// Inject
 	@Autowired
 	private PedidoService service;
 
 	/*
-	 * Mapeia as chamadas ao endpoint /categorias/{id} no metodo find(), passando
-	 * o paramentro id
+	 * Mapeia as chamadas ao endpoint /categorias/{id} no metodo find(), passando o
+	 * paramentro id
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Pedido obj = service.buscar(id); //Metodo buscar de PedidoService
+		Pedido obj = service.buscar(id); // Metodo buscar de PedidoService
 		return ResponseEntity.ok().body(obj);
 	}
 }

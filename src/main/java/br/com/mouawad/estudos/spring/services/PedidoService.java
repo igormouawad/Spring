@@ -10,19 +10,17 @@ import br.com.mouawad.estudos.spring.repositories.PedidoRepository;
 import br.com.mouawad.estudos.spring.services.exeptions.ObjectNotFoundException;
 
 @Service
-public class PedidoService  {
+public class PedidoService {
 
-	//Inject
+	// Inject
 	@Autowired
 	private PedidoRepository pedidoRepository;
-	
-	
+
 	public Pedido buscar(Integer id) {
-		Optional<Pedido> e = pedidoRepository.findById(id); 
+		Optional<Pedido> e = pedidoRepository.findById(id);
 		return e.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 
-		
 	}
-	
+
 }

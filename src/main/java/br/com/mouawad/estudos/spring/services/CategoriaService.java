@@ -1,5 +1,6 @@
 package br.com.mouawad.estudos.spring.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,17 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		return categoriaRepository.save(obj);
 	}
-	
+
 	public void delete(Integer id) {
 		try {
-		categoriaRepository.deleteById(id);
+			categoriaRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
 		}
 	}
+
+	public List<Categoria> findAll() {
+		return categoriaRepository.findAll();
+	}
+
 }

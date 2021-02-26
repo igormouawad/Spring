@@ -10,19 +10,17 @@ import br.com.mouawad.estudos.spring.repositories.ClienteRepository;
 import br.com.mouawad.estudos.spring.services.exeptions.ObjectNotFoundException;
 
 @Service
-public class ClienteService  {
+public class ClienteService {
 
-	//Inject
+	// Inject
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
-	
+
 	public Cliente buscar(Integer id) {
-		Optional<Cliente> e = clienteRepository.findById(id); 
+		Optional<Cliente> e = clienteRepository.findById(id);
 		return e.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 
-		
 	}
-	
+
 }

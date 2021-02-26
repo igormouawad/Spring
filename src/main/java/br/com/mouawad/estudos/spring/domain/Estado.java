@@ -10,25 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Estado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id														 //Indica que o campo é chave primaria
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 	 //Indica a estrategia de geração de id
+
+	@Id // Indica que o campo é chave primaria
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Indica a estrategia de geração de id
 	private Integer id;
 	private String nome;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="estado")
+	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
-	
+
 	public Estado() {
-		
+
 	}
 
 	public Estado(Integer id, String nome) {
@@ -85,7 +84,5 @@ public class Estado implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

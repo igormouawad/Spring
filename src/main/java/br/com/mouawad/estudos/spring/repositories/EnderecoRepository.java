@@ -7,5 +7,5 @@ import br.com.mouawad.estudos.spring.domain.Endereco;
 
 @Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
-	
+
 }

@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*
@@ -24,29 +23,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	@Id														 //Indica que o campo é chave primaria
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 	 //Indica a estrategia de geração de id
+
+	@Id // Indica que o campo é chave primaria
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Indica a estrategia de geração de id
 	private Integer id;
 	private String nome;
 	private Double preco;
-	
+
 	/*
 	 * Mapeando um relacionamento
 	 */
-	@JsonIgnore										 //Proteção para referência cíclica na serialização Json
-	@ManyToMany												 //Tipo de relacionamento
-	@JoinTable(name="PRODUTO_CATEGORIA",					 //Nome da tabela criada para * to *
-	joinColumns = @JoinColumn(name = "produto_id"),			 //Nome da chave esrangeira da tabela produto
-	inverseJoinColumns = @JoinColumn(name = "categoria_id")) //Nome da chave estrangeira da tabela categoria
-	private List<Categoria> categorias = new ArrayList<>();	 //Lista de categorias
-	
+	@JsonIgnore // Proteção para referência cíclica na serialização Json
+	@ManyToMany // Tipo de relacionamento
+	@JoinTable(name = "PRODUTO_CATEGORIA", // Nome da tabela criada para * to *
+			joinColumns = @JoinColumn(name = "produto_id"), // Nome da chave esrangeira da tabela produto
+			inverseJoinColumns = @JoinColumn(name = "categoria_id")) // Nome da chave estrangeira da tabela categoria
+	private List<Categoria> categorias = new ArrayList<>(); // Lista de categorias
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.produto")
 	private Set<ItemPedido> items = new HashSet<>();
-	
+
 	@JsonIgnore
 	public List<Pedido> getPedidos() {
 		List<Pedido> l = new ArrayList<>();
@@ -55,8 +54,7 @@ public class Produto implements Serializable {
 		}
 		return l;
 	}
-	
-	
+
 	public Set<ItemPedido> getItems() {
 		return items;
 	}
@@ -98,7 +96,7 @@ public class Produto implements Serializable {
 	}
 
 	public Produto() {
-		
+
 	}
 
 	public Produto(Integer id, String nome, Double preco) {
@@ -132,7 +130,5 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
