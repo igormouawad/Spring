@@ -116,7 +116,7 @@ public class EstudoSpringApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "MAria Silva", "maria@gmail.com", "341332", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "MAria Silva", "maria@gmail.com","34553108852",TipoCliente.PESSOAFISICA,"dsadsa");
 		cli1.getTelefones().addAll(Arrays.asList("2131231", "5555555555"));
 
 		Endereco e1 = new Endereco(null, "Voluntário", "940", "Rua 1 casa 182", "12053-000", "Estiva", cli1, c1);
@@ -149,8 +149,8 @@ public class EstudoSpringApplication implements CommandLineRunner {
 		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
 
 
-		ped1.getItems().addAll(Arrays.asList(ip1, ip2));
-		ped2.getItems().addAll(Arrays.asList(ip3));
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
 
 		p1.getItems().addAll(Arrays.asList(ip1));
 		p2.getItems().addAll(Arrays.asList(ip3));

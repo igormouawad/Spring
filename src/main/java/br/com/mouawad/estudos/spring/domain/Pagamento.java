@@ -10,32 +10,38 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.com.mouawad.estudos.spring.domain.enums.EstadoPagamento;
 
+
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.JOINED) 
+@JsonTypeInfo(use= JsonTypeInfo.Id.NAME,include= JsonTypeInfo.As.PROPERTY, property="@type") 
 public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
+		
 	@Id
 	private Integer id;
-	private Integer estadoPagamento;
+	private Integer estado;
 
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name = "pedido_id")
+	@JoinColumn(name="pedido_id")
 	@MapsId
 	private Pedido pedido;
-
+	
 	public Pagamento() {
-
 	}
 
-	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
+	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estadoPagamento = (estadoPagamento == null ? null : estadoPagamento.getCod());
+		this.estado = (estado==null) ? null : estado.getCod();
 		this.pedido = pedido;
 	}
 
@@ -47,12 +53,12 @@ public abstract class Pagamento implements Serializable {
 		this.id = id;
 	}
 
-	public EstadoPagamento getEstadoPagamento() {
-		return EstadoPagamento.toEnum(estadoPagamento);
+	public EstadoPagamento getEstado() {
+		return EstadoPagamento.toEnum(estado);
 	}
 
-	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-		this.estadoPagamento = estadoPagamento.getCod();
+	public void setEstado(EstadoPagamento estado) {
+		this.estado = estado.getCod();
 	}
 
 	public Pedido getPedido() {
@@ -87,5 +93,7 @@ public abstract class Pagamento implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
+	
 }
