@@ -1,4 +1,4 @@
-package br.com.mouawad.estudos.spring.a;
+package br.com.mouawad.estudos.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
