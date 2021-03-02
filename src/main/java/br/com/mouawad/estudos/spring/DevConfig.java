@@ -19,8 +19,10 @@ public class DevConfig {
 	@Autowired
 	private DBService dbService;
 	
+	
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
+	
 	
 	@Bean
 	public boolean instantiateDataBase() throws ParseException {
@@ -30,6 +32,8 @@ public class DevConfig {
 		dbService.instatiateTestDatabase();
 		return true;
 	}
+	
+	
 	
 	@Bean
 	public EmailService emailService() {
