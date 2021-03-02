@@ -1,13 +1,12 @@
 package br.com.mouawad.estudos.spring.domain.enums;
 
-public enum EstadoPagamento {
-	PENDENTE(1, "Pendente"), QUITADO(2, "Quitado"), CANCELADO(3, "Cancelado");
-	
+public enum Perfil {
+	ADMIN(1, "ROLE_ADMIN"), CLIENTE(2, "ROLE_CLIENTE");
 
 	private int cod;
 	private String descricao;
 
-	private EstadoPagamento(int n, String s) {
+	private Perfil(int n, String s) {
 		this.cod = n;
 		this.descricao = s;
 	}
@@ -20,11 +19,11 @@ public enum EstadoPagamento {
 		return descricao;
 	}
 
-	public static EstadoPagamento toEnum(Integer cod) {
+	public static Perfil toEnum(Integer cod) {
 		if (cod == null) {
 			return null;
 		}
-		for (EstadoPagamento x : EstadoPagamento.values()) {
+		for (Perfil x : Perfil.values()) {
 			if (cod.equals(x.getCod())) {
 				return x;
 			}

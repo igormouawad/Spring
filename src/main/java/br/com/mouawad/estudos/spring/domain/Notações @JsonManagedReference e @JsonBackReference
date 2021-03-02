@@ -1,8 +1,0 @@
-@JsonManagedReference e @JsonBackReference
-
-Anotação usada para indicar que a propriedade associada
-faz parte de uma ligação bidirecional entre os campos.
-impedindo referencias ciclica nas relações entre Entidades
-
-Obs. É um modo classico de resolver o problema da referencia ciclica, mas
-existe outras formas mais complexas, expesifica e flexiveis para implementar a solução.
