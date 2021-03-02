@@ -1,5 +1,7 @@
 package br.com.mouawad.estudos.spring.dto;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -9,7 +11,7 @@ import br.com.mouawad.estudos.spring.domain.Cliente;
 import br.com.mouawad.estudos.spring.services.validation.ClienteUpdate;
 
 @ClienteUpdate
-public class ClienteDTO {
+public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
