@@ -1,12 +1,17 @@
 package br.com.mouawad.estudos.spring.services;
 
 
+
 import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import br.com.mouawad.estudos.spring.domain.Cliente;
 import br.com.mouawad.estudos.spring.domain.ItemPedido;
 import br.com.mouawad.estudos.spring.domain.PagamentoComBoleto;
 import br.com.mouawad.estudos.spring.domain.Pedido;
@@ -14,7 +19,11 @@ import br.com.mouawad.estudos.spring.domain.enums.EstadoPagamento;
 import br.com.mouawad.estudos.spring.repositories.ItemPedidoRepository;
 import br.com.mouawad.estudos.spring.repositories.PagamentoRepository;
 import br.com.mouawad.estudos.spring.repositories.PedidoRepository;
+import br.com.mouawad.estudos.spring.security.UserSS;
+import br.com.mouawad.estudos.spring.services.exeptions.AuthorizationException;
 import br.com.mouawad.estudos.spring.services.exeptions.ObjectNotFoundException;
+
+
 
 @Service
 public class PedidoService {
@@ -25,6 +34,8 @@ public class PedidoService {
 	@Autowired
 	private BoletoService boletoService;
 	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
@@ -34,14 +45,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ClienteService clienteService;
-	@Autowired
-	private PagamentoService pagamentoService;
-	@Autowired
-	private ItemPedidoService itemPedidoService;
+	
 	@Autowired
 	private EmailService emailService;
-	
-
 	
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
@@ -49,7 +55,6 @@ public class PedidoService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
-
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
@@ -61,17 +66,25 @@ public class PedidoService {
 			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
 		obj = repo.save(obj);
-		pagamentoService.insert(obj.getPagamento());
+		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));
 			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
-		itemPedidoService.insert(obj.getItens());
+		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 	
-
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente =  clienteService.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+	}
 }
