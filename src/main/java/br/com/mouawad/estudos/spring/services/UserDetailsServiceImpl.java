@@ -7,21 +7,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.mouawad.estudos.spring.domain.Cliente;
+import br.com.mouawad.estudos.spring.repositories.ClienteRepository;
 import br.com.mouawad.estudos.spring.security.UserSS;
+
+
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private ClienteService clienteService;
+	private ClienteRepository repo;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Cliente e = clienteService.findByEmail(email);
-		if(e == null) {
+		Cliente cli = repo.findByEmail(email);
+		if (cli == null) {
 			throw new UsernameNotFoundException(email);
 		}
-		return new UserSS(e.getId(),e.getEmail(),e.getSenha(),e.getPerfis());
+		return new UserSS(cli.getId(), cli.getEmail(), cli.getSenha(), cli.getPerfis());
 	}
-
 }

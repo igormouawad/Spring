@@ -14,13 +14,13 @@ import br.com.mouawad.estudos.spring.services.MockEmailService;
 @Configuration
 @Profile("test")
 public class TestConfig {
-	
+
 	@Autowired
 	private DBService dbService;
 	
 	@Bean
-	public boolean instantiateDataBase() throws ParseException {
-		dbService.instatiateTestDatabase();
+	public boolean instantiateDatabase() throws ParseException {
+		dbService.instantiateTestDatabase();
 		return true;
 	}
 	

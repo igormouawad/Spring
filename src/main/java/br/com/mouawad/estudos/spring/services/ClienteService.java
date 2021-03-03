@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.mouawad.estudos.spring.domain.Cidade;
 import br.com.mouawad.estudos.spring.domain.Cliente;
 import br.com.mouawad.estudos.spring.domain.Endereco;
+import br.com.mouawad.estudos.spring.domain.enums.Perfil;
 import br.com.mouawad.estudos.spring.domain.enums.TipoCliente;
 import br.com.mouawad.estudos.spring.dto.ClienteDTO;
 import br.com.mouawad.estudos.spring.dto.ClienteNewDTO;
 import br.com.mouawad.estudos.spring.repositories.ClienteRepository;
 import br.com.mouawad.estudos.spring.repositories.EnderecoRepository;
+import br.com.mouawad.estudos.spring.security.UserSS;
+import br.com.mouawad.estudos.spring.services.exeptions.AuthorizationException;
 import br.com.mouawad.estudos.spring.services.exeptions.DataIntegrityException;
 import br.com.mouawad.estudos.spring.services.exeptions.ObjectNotFoundException;
 
@@ -35,12 +38,16 @@ public class ClienteService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Cliente find(Integer id) {
-		Optional<Cliente> e = clienteRepository.findById(id);
-		return e.orElseThrow(() -> new ObjectNotFoundException(
+		
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Optional<Cliente> obj = clienteRepository.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
-
 	}
-	
 	@Transactional
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);

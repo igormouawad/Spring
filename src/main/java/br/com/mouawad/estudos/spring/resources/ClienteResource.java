@@ -1,5 +1,4 @@
 package br.com.mouawad.estudos.spring.resources;
-
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +22,9 @@ import br.com.mouawad.estudos.spring.dto.ClienteDTO;
 import br.com.mouawad.estudos.spring.dto.ClienteNewDTO;
 import br.com.mouawad.estudos.spring.services.ClienteService;
 
+
 @RestController
-@RequestMapping(value = "/clientes")
+@RequestMapping(value="/clientes")
 public class ClienteResource {
 	
 	@Autowired
@@ -33,12 +33,6 @@ public class ClienteResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		Cliente obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	
-	@RequestMapping(value="/email", method=RequestMethod.GET)
-	public ResponseEntity<Cliente> find(@RequestParam(value="value") String email) {
-		Cliente obj = service.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -51,8 +45,6 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-
-	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDto, @PathVariable Integer id) {
 		Cliente obj = service.fromDTO(objDto);
@@ -60,7 +52,7 @@ public class ClienteResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
@@ -87,6 +79,4 @@ public class ClienteResource {
 		Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));  
 		return ResponseEntity.ok().body(listDto);
 	}	
-	
-
 }

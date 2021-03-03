@@ -1,5 +1,4 @@
 package br.com.mouawad.estudos.spring.config;
-
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,32 +11,31 @@ import br.com.mouawad.estudos.spring.services.DBService;
 import br.com.mouawad.estudos.spring.services.EmailService;
 import br.com.mouawad.estudos.spring.services.SmtpEmailService;
 
+
+
 @Configuration
 @Profile("dev")
 public class DevConfig {
-	
+
 	@Autowired
 	private DBService dbService;
-	
 	
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
 	
-	
 	@Bean
-	public boolean instantiateDataBase() throws ParseException {
-		if(!strategy.equals("create")) {
+	public boolean instantiateDatabase() throws ParseException {
+		
+		if (!"create".equals(strategy)) {
 			return false;
 		}
-		dbService.instatiateTestDatabase();
+		
+		dbService.instantiateTestDatabase();
 		return true;
 	}
-	
-	
 	
 	@Bean
 	public EmailService emailService() {
 		return new SmtpEmailService();
 	}
-	
 }
