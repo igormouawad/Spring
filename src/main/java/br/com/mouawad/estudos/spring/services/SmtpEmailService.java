@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
+import br.com.mouawad.estudos.spring.domain.Cliente;
+
 public class SmtpEmailService extends AbastractEmailService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
@@ -21,5 +23,7 @@ public class SmtpEmailService extends AbastractEmailService {
 		LOG.info("Email enviado");
 		
 	}
+
+
 
 }
