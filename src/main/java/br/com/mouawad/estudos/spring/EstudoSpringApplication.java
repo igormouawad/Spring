@@ -30,18 +30,21 @@ import br.com.mouawad.estudos.spring.repositories.ItemPedidoRepository;
 import br.com.mouawad.estudos.spring.repositories.PagamentoRepository;
 import br.com.mouawad.estudos.spring.repositories.PedidoRepository;
 import br.com.mouawad.estudos.spring.repositories.ProdutoRepository;
+import br.com.mouawad.estudos.spring.services.S3Service;
 
 @SpringBootApplication
 public class EstudoSpringApplication implements CommandLineRunner {
 
-
+	@Autowired
+	private S3Service s3Service;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(EstudoSpringApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("dsadsad");
+		s3Service.uploadFile("C:\\Users\\igor\\Pictures\\20201022_175028.jpg");
 
 	}
 
