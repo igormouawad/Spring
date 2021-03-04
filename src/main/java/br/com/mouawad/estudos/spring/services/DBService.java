@@ -55,6 +55,9 @@ public class DBService {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	@Autowired
+	private EmailService emailService;
+
 	
 	public void instantiateTestDatabase() throws ParseException {
 		
@@ -159,6 +162,7 @@ public class DBService {
 		p2.getItems().addAll(Arrays.asList(ip3));
 		p3.getItems().addAll(Arrays.asList(ip2));
 		
-		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));	
+		emailService.sendNewPasswordEmail(cli1, "testeopassssss");
 	}
 }
